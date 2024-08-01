@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    gap: 100px;
+}
+
+.error {
+    display: flex;
+    flex-direction: column; /* Align children vertically */
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Center text alignment */
+}
+  
+
+.imgContainer {
+    flex: 1;
+    position: relative;
+    height: calc(100vh - 400px);
+}
+
+.textContainer {
+    flex: 2;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.desc {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.postButton{
+    padding: 5px 10px;
+    background-color: rgba(220, 20, 60, 0.593);
+    color: var(--textColor);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+@media(max-width: 768px) {
+    .imgContainer {
+        display: none;
+    }
+}
