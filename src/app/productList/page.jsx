@@ -8,9 +8,8 @@ export const metadata = {
 
 // fetch data with an API
 const getData = async () => {
-  const apiUrl = process.env.API_URL;
-
-  const res = await fetch(`${apiUrl}/api/productList`, {next:{revalidate:3600}});
+  
+  const res = await fetch('http://localhost:3000/api/productList', {next:{revalidate:3600}});
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
