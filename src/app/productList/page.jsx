@@ -11,9 +11,9 @@ const getData = async () => {
   const apiUrl = process.env.API_URL;
   const vercelUrl = process.env.VERCEL_URL;
 
-  console.log('API URL:',  process.env.NODE_ENV);
-
    let fetchUrl = process.env.NODE_ENV === 'development' ? `${apiUrl}/api/productList` : `https://${vercelUrl}/api/productList`;
+   console.log('API URL: 2',  fetchUrl);
+   console.log('API URL:',  process.env.NODE_ENV);
 
   const res = await fetch(fetchUrl, {next:{revalidate:3600}});
 
