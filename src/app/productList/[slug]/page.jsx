@@ -2,37 +2,15 @@ import { getPost } from '@/lib/data';
 import styles from './singleProduct.module.css';
 import Image from 'next/image';
 import { deletePost } from "@/lib/actions";
+import { connectToDb } from '@/lib/utils';
+import { Post } from '@/lib/models';
 
 // fetch data with an API
 const getData = async (slug) => {
-  const vercelUrl = process.env.VERCEL_URL;
+  connectToDb();
 
-  let fetchUrl;
-
-  if (process.env.NODE_ENV === 'development') {
-    // In development, use the local API endpoint
-    fetchUrl = `http://localhost:3000/api/productList/${slug}`;
-  } else {
-    // In production, use the dynamic Vercel URL or other production URL
-    fetchUrl = `https://${process.env.VERCEL_URL}/api/productList/${slug}`;
-  }
-
-  let res;
-  try {
-    res = await fetch(fetchUrl, {next:{revalidate:3600}});
-  } catch (error) {
-    console.log(error)
-  }
-
- const data = await res.json();
-
- console.log("data", data);
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  return await res.json();
+  const post = await Post.findOne({slug});
+  return post;
 }
 
 export const generateMetadata = async ({params}) => {
@@ -55,9 +33,9 @@ export const generateMetadata = async ({params}) => {
 const SingleProductPage = async ({ params }) => {
   const {slug} = params;
 
-  console.log('API URL:',  process.env.NODE_ENV);
   // fetch data with an API
   const post = await getData(slug);
+
 
   if (!post) {
     return (
@@ -79,7 +57,7 @@ const SingleProductPage = async ({ params }) => {
         <p className={styles.desc}>{post.desc}</p>
 
         <form action={deletePost}>
-          <input type="hidden" name="id" value={post._id} />
+          <input type="hidden" name="id" value={post._id.toString()} />
           <button className={styles.postButton}>Delete</button>
         </form>
       </div>
