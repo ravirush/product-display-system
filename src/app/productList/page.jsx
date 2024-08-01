@@ -22,7 +22,7 @@ const getData = async () => {
 
   const res = await fetch(fetchUrl, {next:{revalidate:3600}});
 
-  console.log(res)
+  console.log(res.json());
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
