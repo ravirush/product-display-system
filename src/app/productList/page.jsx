@@ -23,13 +23,13 @@ const getData = async () => {
   const res = await fetch(fetchUrl, {next:{revalidate:3600}});
   const data = await res.json();
 
-  console.log(data);
+  console.log("data", data);
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
 
-  return res.json();
+  return await res.json();
 }
 
 const ProductListPage = async () => {
