@@ -14,7 +14,7 @@ const getData = async (slug) => {
     fetchUrl = `http://localhost:3000/api/productList/${slug}`;
   } else {
     // In production, use the dynamic Vercel URL or other production URL
-    fetchUrl = `/api/productList/${slug}`;
+    fetchUrl = `${process.env.VERCEL_URL}/api/productList/${slug}`;
   }
 
  const res = await fetch(fetchUrl, {next:{revalidate:3600}});
