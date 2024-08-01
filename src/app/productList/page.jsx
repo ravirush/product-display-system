@@ -10,7 +10,7 @@ export const metadata = {
 const getData = async () => {
   const apiUrl = process.env.VERCEL_URL;
 
-  const res = await fetch(`${apiUrl}/api/productList`, {next:{revalidate:3600}});
+  const res = await fetch(`https://${apiUrl}/api/productList`, {next:{revalidate:3600}});
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

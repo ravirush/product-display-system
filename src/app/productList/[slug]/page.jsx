@@ -6,8 +6,10 @@ import { deletePost } from "@/lib/actions";
 // fetch data with an API
 const getData = async (slug) => {
   const apiUrl = process.env.API_URL;
+  const vercelUrl = process.env.VERCEL_URL;
+  let fetchUrl = process.env.NODE_ENV === 'development' ? `${apiUrl}/api/productList/${slug}` : `https://${vercelUrl}/api/productList/${slug}`;
 
-  const res = await fetch(`${apiUrl}/api/productList/${slug}`);
+  const res = await fetch(`${fetchUrl}`);
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
