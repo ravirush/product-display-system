@@ -20,9 +20,13 @@ const getData = async () => {
     fetchUrl = `https://${process.env.VERCEL_URL}/api/productList`;
   }
 
-  const res = await fetch(fetchUrl, {next:{revalidate:3600}});
+  let res;
+  try {
+    res = await fetch(fetchUrl, {next:{revalidate:3600}});
+  } catch (error) {
+    console.log(error)
+  }
   const data = await res.json();
-
   console.log("data", data);
 
   if (!res.ok) {
