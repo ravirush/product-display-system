@@ -8,12 +8,17 @@ export const metadata = {
 
 // fetch data with an API
 const getData = async () => {
-  const apiUrl = process.env.API_URL;
   const vercelUrl = process.env.VERCEL_URL;
 
-   let fetchUrl = process.env.NODE_ENV === 'development' ? `${apiUrl}/api/productList` : `https://${vercelUrl}/api/productList`;
-   console.log('API URL: 2',  fetchUrl);
-   console.log('API URL:',  process.env.NODE_ENV);
+  let fetchUrl;
+
+  if (process.env.NODE_ENV === 'development') {
+    // In development, use the local API endpoint
+    fetchUrl = `http://localhost:3000/api/productList`;
+  } else {
+    // In production, use the dynamic Vercel URL or other production URL
+    fetchUrl = `https://${vercelUrl}/api/productList`;
+  }
 
   const res = await fetch(fetchUrl, {next:{revalidate:3600}});
 
