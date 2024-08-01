@@ -8,9 +8,14 @@ export const metadata = {
 
 // fetch data with an API
 const getData = async () => {
-  const apiUrl = process.env.VERCEL_URL;
+  const apiUrl = process.env.API_URL;
+  const vercelUrl = process.env.VERCEL_URL;
 
-  const res = await fetch(`https://${apiUrl}/api/productList`, {next:{revalidate:3600}});
+  console.log('API URL:',  process.env.NODE_ENV);
+
+   let fetchUrl = process.env.NODE_ENV === 'development' ? `${apiUrl}/api/productList` : `https://${vercelUrl}/api/productList`;
+
+  const res = await fetch(fetchUrl, {next:{revalidate:3600}});
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

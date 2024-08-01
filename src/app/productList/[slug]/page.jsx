@@ -7,9 +7,13 @@ import { deletePost } from "@/lib/actions";
 const getData = async (slug) => {
   const apiUrl = process.env.API_URL;
   const vercelUrl = process.env.VERCEL_URL;
-  let fetchUrl = process.env.NODE_ENV === 'development' ? `${apiUrl}/api/productList/${slug}` : `https://${vercelUrl}/api/productList/${slug}`;
 
-  const res = await fetch(`${fetchUrl}`);
+  console.log('API URL:',  process.env.NODE_ENV);
+
+ let fetchUrl = process.env.NODE_ENV === 'development' ? `${apiUrl}/api/productList/${slug}` : `https://${vercelUrl}/api/productList/${slug}`;
+
+
+ const res = await fetch(fetchUrl, {next:{revalidate:3600}});
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
@@ -38,6 +42,7 @@ export const generateMetadata = async ({params}) => {
 const SingleProductPage = async ({ params }) => {
   const {slug} = params;
 
+  console.log('API URL:',  process.env.NODE_ENV);
   // fetch data with an API
   const post = await getData(slug);
 
